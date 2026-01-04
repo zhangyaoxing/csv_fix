@@ -2,7 +2,7 @@
 
 ## Instruction
 
-This script uses state machine to fix csv file for `mongoimport` to work properly.
+This script uses state machine to fix maleformed csv file.
 
 ```txt
 Usage: csv_conv.py [Options] <filename>
