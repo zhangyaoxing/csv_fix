@@ -1,14 +1,14 @@
-# csv_conv
+# csv_fix
 
-[![PyPI version](https://img.shields.io/pypi/v/csv_conv.svg)](https://pypi.org/project/csv_conv/)
-[![Python versions](https://img.shields.io/pypi/pyversions/csv_conv.svg)](https://pypi.org/project/csv_conv/)
+[![PyPI version](https://img.shields.io/pypi/v/csv_fix.svg)](https://pypi.org/project/csv_fix/)
+[![Python versions](https://img.shields.io/pypi/pyversions/csv_fix.svg)](https://pypi.org/project/csv_fix/)
 
 ## Instruction
 
 This script uses state machine to fix maleformed csv file.
 
 ```txt
-Usage: csv_conv.py [Options] <filename>
+Usage: csv_fix.py [Options] <filename>
 Options and arguments:
   [-h/--help]: Show this message.
   [-s]: Define sperator. Defaults to comma.
@@ -22,8 +22,8 @@ Options and arguments:
 
 ## Examples
 ```bash
-cat testcase/test_case_1.csv | csv_conv
-csv_conv -t testcase/test_case_1.csv
+cat testcase/test_case_1.csv | csv_fix
+csv_fix -t testcase/test_case_1.csv
 ```
 
 ## Features
@@ -37,7 +37,7 @@ Quotes should be immediated followed by seperator or line end or EOF, otherwise 
 ```
 
 ```bash
-./csv_conv.py ../testcase/test_case_1.csv
+./csv_fix.py ../testcase/test_case_1.csv
 "What""s up!","I""m good","I""m also good","""I'm still good""","two quotes"" shouldn't make any difference"""
 ```
 
@@ -50,7 +50,7 @@ For fields that begin/end with white space are stripped by default. Otherwise `m
  ```
 
 ```bash
-./csv_conv.py ../testcase/test_case_2.csv
+./csv_fix.py ../testcase/test_case_2.csv
 "red","yellow","green","red"
 ```
 
@@ -65,6 +65,6 @@ Seperator can be customized, not necessarily to be ",". Specify seperator by `-s
 ```
 
 ```bash
-./csv_conv.py -s '||' ../testcase/test_case_3.csv
+./csv_fix.py -s '||' ../testcase/test_case_3.csv
 "hello","This is a test","This should be good.||""",
 ```
