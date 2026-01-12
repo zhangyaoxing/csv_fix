@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import os
 from logging import getLogger
-from csv_conv.states import States
+from csv_fix.states import States
 
 
 class CSVStateMachine:

@@ -1,5 +1,8 @@
 # csv_conv
 
+[![PyPI version](https://img.shields.io/pypi/v/csv_conv.svg)](https://pypi.org/project/csv_conv/)
+[![Python versions](https://img.shields.io/pypi/pyversions/csv_conv.svg)](https://pypi.org/project/csv_conv/)
+
 ## Instruction
 
 This script uses state machine to fix maleformed csv file.
@@ -11,13 +14,19 @@ Options and arguments:
   [-s]: Define sperator. Defaults to comma.
   [-q]: Define text qualifier. Defaults to auto detect.
   [-t]: Trim white space at the beginning and end of each field. Defaults to double quote.
-  [-z]: Specify timezone for time fields. Defaults to server timezone. Can also be Asia/Chongqing etc.
+  [-z]: (Being constructed) Specify timezone for time fields. Defaults to server timezone. Can also be Asia/Chongqing etc.
         For standard timezone names, refer to: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   [-k]: Skip errors and continue parsing following lines.
   <filename>: csv file name.
 ```
 
-## Scenarios
+## Examples
+```bash
+cat testcase/test_case_1.csv | csv_conv
+csv_conv -t testcase/test_case_1.csv
+```
+
+## Features
 
 ### Quote within Quote
 

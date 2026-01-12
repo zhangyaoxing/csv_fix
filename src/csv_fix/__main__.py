@@ -6,7 +6,7 @@ import os
 import sys
 import logging
 
-from csv_conv.CSVStateMachine import CSVStateMachine
+from csv_fix.CSVStateMachine import CSVStateMachine
 
 
 def setup_logging():

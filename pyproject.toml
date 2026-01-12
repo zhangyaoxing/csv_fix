@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "csv_conv"
+name = "csv_fix"
 version = "0.2.0"
 description = "A command line tool for CSV file processing"
 readme = "README.md"
@@ -30,11 +30,11 @@ dependencies = []
 dev = ["pytest>=7.0", "pytest-cov>=4.0", "black>=23.0", "ruff>=0.1.0"]
 
 [project.scripts]
-csv_conv = "csv_conv.__main__:main"
+csv_fix = "csv_fix.__main__:main"
 
 [project.urls]
-Homepage = "https://github.com/yourusername/csv_conv"
-Repository = "https://github.com/yourusername/csv_conv"
+Homepage = "https://github.com/yourusername/csv_fix"
+Repository = "https://github.com/yourusername/csv_fix"
 
 [tool.setuptools.packages.find]
 where = ["src"]

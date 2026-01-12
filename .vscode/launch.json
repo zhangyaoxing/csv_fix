@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: csv_conv Module",
+            "name": "Python: csv_fix Module",
             "type": "debugpy",
             "request": "launch",
-            "module": "csv_conv",
+            "module": "csv_fix",
             "args": [
                 "-s",
                 ",",
