@@ -1,8 +1,11 @@
 # csv_conv
 
+[![PyPI version](https://img.shields.io/pypi/v/csv_conv.svg)](https://pypi.org/project/csv_conv/)
+[![Python versions](https://img.shields.io/pypi/pyversions/csv_conv.svg)](https://pypi.org/project/csv_conv/)
+
 ## Instruction
 
-This script uses state machine to fix csv file for `mongoimport` to work properly.
+This script uses state machine to fix maleformed csv file.
 
 ```txt
 Usage: csv_conv.py [Options] <filename>
@@ -11,15 +14,21 @@ Options and arguments:
   [-s]: Define sperator. Defaults to comma.
   [-q]: Define text qualifier. Defaults to auto detect.
   [-t]: Trim white space at the beginning and end of each field. Defaults to double quote.
-  [-z]: Specify timezone for time fields. Defaults to server timezone. Can also be Asia/Chongqing etc.
+  [-z]: (Being constructed) Specify timezone for time fields. Defaults to server timezone. Can also be Asia/Chongqing etc.
         For standard timezone names, refer to: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   [-k]: Skip errors and continue parsing following lines.
   <filename>: csv file name.
 ```
 
-## Scenarios
+## Examples
+```bash
+cat testcase/test_case_1.csv | csv_conv
+csv_conv -t testcase/test_case_1.csv
+```
 
-### Quote within quote
+## Features
+
+### Quote within Quote
 
 Quotes should be immediated followed by seperator or line end or EOF, otherwise it's not a valid qualifier, and should be escaped. The following format should be fixed (_See `../testcase/test_case_1.csv`_):
 
@@ -32,9 +41,9 @@ Quotes should be immediated followed by seperator or line end or EOF, otherwise 
 "What""s up!","I""m good","I""m also good","""I'm still good""","two quotes"" shouldn't make any difference"""
 ```
 
-### Begin/End with white space
+### Begin/End with White Space
 
-For fields that begin/end with white space are stript by default. Otherwise `mongoimport` type conversion wouldn't work properly (_See `../testcase/test_case_2.csv`_):
+For fields that begin/end with white space are stripped by default. Otherwise `mongoimport` type conversion wouldn't work properly (_See `../testcase/test_case_2.csv`_):
 
 ```csv
  red,	yellow,green ,"red	"
@@ -47,7 +56,7 @@ For fields that begin/end with white space are stript by default. Otherwise `mon
 
 If it's not expected behavior, use `-t false` to cancel it.
 
-### Customize seperator
+### Customize Seperator
 
 Seperator can be customized, not necessarily to be ",". Specify seperator by `-s`. Note that seperators like `|` needs to be escaped in bash. E.g. (_See `../testcase/test_case_3.csv`_):
 
@@ -59,7 +68,3 @@ Seperator can be customized, not necessarily to be ",". Specify seperator by `-s
 ./csv_conv.py -s '||' ../testcase/test_case_3.csv
 "hello","This is a test","This should be good.||""",
 ```
-
-### Encoding detect
-
-For now `GBK` can be detected and converted to `UTF-8`. Will add other encoding detected later.

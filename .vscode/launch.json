@@ -5,16 +5,17 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: Current File",
-            "type": "python",
+            "name": "Python: csv_fix Module",
+            "type": "debugpy",
             "request": "launch",
-            "program": "${file}",
+            "module": "csv_fix",
             "args": [
                 "-s",
-                "','",
-                "csv4testing/test_case_1.csv"
+                ",",
+                "testcase/test_case_1.csv"
             ],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

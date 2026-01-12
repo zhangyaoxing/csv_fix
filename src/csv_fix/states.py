@@ -1,0 +1,11 @@
+from enum import Enum
+
+
+class States(Enum):
+    QUALIFIER = "QUALIFIER"
+    QUALIFIER_CLOSE = "QUALIFIER_CLOSE"
+    SEPARATOR = "SEPARATOR"
+    FIELD = "FIELD"
+    FIELD_IN_QUALIFIER = "FIELD_IN_QUALIFIER"
+    END = "END"
+    INVALID = "INVALID"
