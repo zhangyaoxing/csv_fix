@@ -1,10 +1,10 @@
 from enum import Enum
 
 
-class STATES(Enum):
+class States(Enum):
     QUALIFIER = "QUALIFIER"
     QUALIFIER_CLOSE = "QUALIFIER_CLOSE"
-    SEPERATOR = "SEPERATOR"
+    SEPARATOR = "SEPARATOR"
     FIELD = "FIELD"
     FIELD_IN_QUALIFIER = "FIELD_IN_QUALIFIER"
     END = "END"

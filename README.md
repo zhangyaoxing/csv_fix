@@ -19,7 +19,7 @@ Options and arguments:
 
 ## Scenarios
 
-### Quote within quote
+### Quote within Quote
 
 Quotes should be immediated followed by seperator or line end or EOF, otherwise it's not a valid qualifier, and should be escaped. The following format should be fixed (_See `../testcase/test_case_1.csv`_):
 
@@ -32,9 +32,9 @@ Quotes should be immediated followed by seperator or line end or EOF, otherwise 
 "What""s up!","I""m good","I""m also good","""I'm still good""","two quotes"" shouldn't make any difference"""
 ```
 
-### Begin/End with white space
+### Begin/End with White Space
 
-For fields that begin/end with white space are stript by default. Otherwise `mongoimport` type conversion wouldn't work properly (_See `../testcase/test_case_2.csv`_):
+For fields that begin/end with white space are stripped by default. Otherwise `mongoimport` type conversion wouldn't work properly (_See `../testcase/test_case_2.csv`_):
 
 ```csv
  red,	yellow,green ,"red	"
@@ -47,7 +47,7 @@ For fields that begin/end with white space are stript by default. Otherwise `mon
 
 If it's not expected behavior, use `-t false` to cancel it.
 
-### Customize seperator
+### Customize Seperator
 
 Seperator can be customized, not necessarily to be ",". Specify seperator by `-s`. Note that seperators like `|` needs to be escaped in bash. E.g. (_See `../testcase/test_case_3.csv`_):
 
@@ -59,7 +59,3 @@ Seperator can be customized, not necessarily to be ",". Specify seperator by `-s
 ./csv_conv.py -s '||' ../testcase/test_case_3.csv
 "hello","This is a test","This should be good.||""",
 ```
-
-### Encoding detect
-
-For now `GBK` can be detected and converted to `UTF-8`. Will add other encoding detected later.

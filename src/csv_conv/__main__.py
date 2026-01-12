@@ -1,8 +1,20 @@
 #!/usr/bin/env python3
-"""CSV Converter - A command line tool for CSV file processing."""
+"""CSV Converter - A command line tool for fixing maleformed CSV file."""
 
 import argparse
+import os
 import sys
+import logging
+
+from csv_conv.CSVStateMachine import CSVStateMachine
+
+
+def setup_logging():
+    level = os.getenv("LOG_LEVEL", "WARNING").upper()
+    logging.basicConfig(
+        level=getattr(logging, level, logging.WARNING),
+        format="%(levelname)s - %(name)s - %(message)s",
+    )
 
 
 def parse_args(args=None):
@@ -23,7 +35,7 @@ def parse_args(args=None):
     parser.add_argument(
         "-q",
         dest="qualifier",
-        default=None,
+        default='"',
         help="Define text qualifier. Defaults to auto detect.",
     )
 
@@ -64,20 +76,43 @@ def parse_args(args=None):
     return parser.parse_args(args)
 
 
+def feed_input(fs, state_machine):
+    """Feed input stream to state machine line by line."""
+    for line in fs:
+        state_machine.feed(line.rstrip("\n"))
+
+
 def main():
     """Main entry point."""
     args = parse_args()
+    logger = logging.getLogger(__name__)
 
-    # TODO: Implement CSV processing logic
-    print(f"Separator: {args.separator!r}")
-    print(f"Qualifier: {args.qualifier!r}")
-    print(f"Trim: {args.trim}")
-    print(f"Timezone: {args.timezone}")
-    print(f"Skip errors: {args.skip_errors}")
-    print(f"Input file: {args.input_file}")
-
+    logger.info("Separator: %s", args.separator)
+    logger.info(
+        "Qualifier: %s",
+        "[auto detect]" if args.qualifier is None else args.qualifier,
+    )
+    logger.info("Trim: %s", args.trim)
+    logger.info("Timezone: %s", args.timezone)
+    logger.info("Skip errors: %s", args.skip_errors)
+    logger.info("Input file: %s", args.input_file or "stdin")
+    state_machine = CSVStateMachine(args, sys.stdout)
+    if sys.stdin.isatty():
+        # Read from file
+        filename = args.input_file
+        try:
+            with open(filename, "r", encoding="utf-8") as fs:
+                feed_input(fs, state_machine)
+        except IOError:
+            logging.error("File not found or occupied by other process: %s", filename)
+            return 1
+    else:
+        # Read from stdin
+        fs = sys.stdin
+        feed_input(fs, state_machine)
     return 0
 
 
 if __name__ == "__main__":
+    setup_logging()
     sys.exit(main())
