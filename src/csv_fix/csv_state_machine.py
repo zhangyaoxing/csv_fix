@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import os
 from logging import getLogger
 from csv_fix.states import States
 
@@ -72,14 +71,10 @@ class CSVStateMachine:
                 else:
                     self.field.append(self.qualifier)
                     self.field.append(ch)
+                    self.state = States.FIELD_IN_QUALIFIER
                 continue
             if self.state == States.CANDIDATE_ESCAPE:
-                if ch == self.separator:
-                    self.field.append(self.qualifier)
-                    self._push_field("".join(self.field))
-                    self.state = States.NEW_FIELD
-                elif ch == "\n" or ch == FILE_END:
-                    self.field.append(self.qualifier)
+                if ch == "\n" or ch == FILE_END:
                     self._push_field("".join(self.field))
                     self._flush_fields()
                     self.state = States.NEW_FIELD
@@ -92,7 +87,10 @@ class CSVStateMachine:
         # TODO: handle time convertion
         if self.trim:
             field = field.strip()
-        self.fields.append(f"{self.qualifier}{field}{self.qualifier}")
+        if self.state == States.FIELD:
+            self.fields.append(field)
+        else:
+            self.fields.append(f"{self.qualifier}{field}{self.qualifier}")
         self.field = []
 
     def _flush_fields(self):
