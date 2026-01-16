@@ -52,6 +52,10 @@ class CSVStateMachine:
                 if ch == self.qualifier:
                     self.field.append(ch)
                     self.state = States.CANDIDATE_FIELD_END
+                elif ch == FILE_END:
+                    self._push_field("".join(self.field))
+                    self._flush_fields()
+                    self.state = States.NEW_FIELD
                 else:
                     self.field.append(ch)
                 continue
@@ -74,10 +78,13 @@ class CSVStateMachine:
                     self.state = States.FIELD_IN_QUALIFIER
                 continue
             if self.state == States.CANDIDATE_ESCAPE:
-                if ch == "\n" or ch == FILE_END:
+                if ch == FILE_END:
                     self._push_field("".join(self.field))
                     self._flush_fields()
                     self.state = States.NEW_FIELD
+                elif ch == self.qualifier:
+                    self.field.append(ch)
+                    self.state = States.CANDIDATE_FIELD_END
                 else:
                     self.field.append(ch)
                     self.state = States.FIELD_IN_QUALIFIER
@@ -87,7 +94,7 @@ class CSVStateMachine:
         # TODO: handle time convertion
         if self.trim:
             field = field.strip()
-        if self.state == States.FIELD:
+        if self.state in [States.NEW_FIELD, States.FIELD]:
             self.fields.append(field)
         else:
             self.fields.append(f"{self.qualifier}{field}{self.qualifier}")
@@ -99,4 +106,4 @@ class CSVStateMachine:
         self.fields = []
 
     def _detect_time(self):
-        return
+        raise NotImplementedError
