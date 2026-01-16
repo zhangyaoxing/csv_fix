@@ -6,7 +6,7 @@ import os
 import sys
 import logging
 
-from csv_fix.CSVStateMachine import CSVStateMachine
+from csv_fix.csv_state_machine import CSVStateMachine, FILE_END
 
 
 def setup_logging():
@@ -79,14 +79,29 @@ def parse_args(args=None):
 def feed_input(fs, state_machine):
     """Feed input stream to state machine line by line."""
     for line in fs:
-        state_machine.feed(line.rstrip("\n"))
+        state_machine.feed(line)
+    # Indicate the end of input
+    state_machine.feed(FILE_END)
+
+
+def check_args(args):
+    """Check validity of command line arguments."""
+    if len(args.separator) != 1:
+        logging.error("Separator must be a single character.")
+        return False
+    if len(args.qualifier) != 1 and args.qualifier is not None:
+        logging.error("Qualifier can't be empty string.")
+        return False
+    return True
 
 
 def main():
     """Main entry point."""
     args = parse_args()
-    logger = logging.getLogger(__name__)
 
+    logger = logging.getLogger(__name__)
+    if not check_args(args):
+        return 1
     logger.info("Separator: %s", args.separator)
     logger.info(
         "Qualifier: %s",

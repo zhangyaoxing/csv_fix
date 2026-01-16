@@ -5,17 +5,29 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: csv_fix Module",
+            "name": "Python: csv_fix Module (Installed)",
             "type": "debugpy",
             "request": "launch",
             "module": "csv_fix",
             "args": [
-                "-s",
-                ",",
                 "testcase/test_case_1.csv"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
+        },
+        {
+            "name": "Python: csv_fix Module (Without Install)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "csv_fix",
+            "args": [
+                "testcase/test_case_4.csv"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/src"
+            }
         }
     ]
 }
