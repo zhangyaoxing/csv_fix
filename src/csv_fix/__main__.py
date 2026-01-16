@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""CSV Converter - A command line tool for fixing maleformed CSV file."""
+"""CSV Converter - A command line tool for fixing malformed CSV file."""
 
 import argparse
 import os
 import sys
 import logging
 
-from csv_fix.csv_state_machine import CSVStateMachine, FILE_END
+from csv_fix import CSVStateMachine, FILE_END
 
 
 def setup_logging():
