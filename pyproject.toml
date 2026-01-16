@@ -48,5 +48,20 @@ line-length = 88
 target-version = "py39"
 
 [tool.pytest.ini_options]
-testpaths = ["testcase"]
-python_files = ["test_*.py"]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+minversion = "7.0"
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+    "--cov=src/csv_fix",
+    "--cov-report=html",
+    "--cov-report=term-missing",
+    "--disable-warnings",
+    "-p",
+    "no:cacheprovider",
+]
+markers = ["unit: Unit Test", "integration: Integration Test"]

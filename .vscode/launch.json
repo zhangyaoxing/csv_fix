@@ -21,13 +21,27 @@
             "request": "launch",
             "module": "csv_fix",
             "args": [
-                "testcase/test_case_4.csv"
+                "-t",
+                "-s",
+                "|",
+                "testcase/test_case_3.csv"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
             "env": {
                 "PYTHONPATH": "${workspaceFolder}/src"
             }
+        },
+        {
+            "name": "Python: pytest (All Tests)",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "-v"
+            ],
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}"
         }
     ]
 }
