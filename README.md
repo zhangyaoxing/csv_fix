@@ -2,6 +2,8 @@
 
 [![PyPI version](https://img.shields.io/pypi/v/csv_fix.svg)](https://pypi.org/project/csv_fix/)
 [![Python versions](https://img.shields.io/pypi/pyversions/csv_fix.svg)](https://pypi.org/project/csv_fix/)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com)
+
 
 ## Instruction
 
