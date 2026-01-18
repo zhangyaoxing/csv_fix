@@ -3,7 +3,7 @@ from csv_fix import CSVStateMachine, FILE_END
 
 TEST_QUALIFIER = 'Field with "quotes"'
 TEST_SEPARATOR = "Field with,comma,Field without qualifier"
-TEST_LINE_END = "Field with line\r\nbreak,Another field"
+TEST_LINE_END = '"Field with line\r\nbreak",Another field'
 
 
 class config:
@@ -18,7 +18,7 @@ def test_qualifier():
     csv_machine = CSVStateMachine(config, output)
     csv_machine.feed(TEST_QUALIFIER)
     csv_machine.feed(FILE_END)
-    assert output.getvalue() == 'Field with "quotes"\n'
+    assert output.getvalue() == '"Field with ""quotes"""\n'
 
 
 def test_separator():
@@ -26,7 +26,7 @@ def test_separator():
     csv_machine = CSVStateMachine(config, output)
     csv_machine.feed(TEST_SEPARATOR)
     csv_machine.feed(FILE_END)
-    assert output.getvalue() == "Field with,comma,Field without qualifier\n"
+    assert output.getvalue() == '"Field with","comma","Field without qualifier"\n'
 
 
 def test_line_end():
@@ -34,4 +34,4 @@ def test_line_end():
     csv_machine = CSVStateMachine(config, output)
     csv_machine.feed(TEST_LINE_END)
     csv_machine.feed(FILE_END)
-    assert output.getvalue() == "Field with line\nbreak,Another field\n"
+    assert output.getvalue() == '"Field with line\nbreak","Another field"\n'

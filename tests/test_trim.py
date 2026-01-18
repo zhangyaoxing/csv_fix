@@ -16,7 +16,7 @@ def test_trim_handling():
     csv_machine = CSVStateMachine(config, output)
     csv_machine.feed(TEST_TRIM)
     csv_machine.feed(FILE_END)
-    assert output.getvalue() == 'red,yellow,green,"red"\n'
+    assert output.getvalue() == '"red","yellow","green","red"\n'
 
 
 def test_no_trim_handling():
@@ -25,4 +25,4 @@ def test_no_trim_handling():
     csv_machine = CSVStateMachine(config, output)
     csv_machine.feed(TEST_TRIM)
     csv_machine.feed(FILE_END)
-    assert output.getvalue() == ' red,	yellow,green ,"red	"\n'
+    assert output.getvalue() == '" red","	yellow","green ","red	"\n'

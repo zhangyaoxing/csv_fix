@@ -38,10 +38,12 @@
             "request": "launch",
             "module": "pytest",
             "args": [
-                "-v"
+                "-v",
+                "-s"
             ],
             "console": "integratedTerminal",
-            "cwd": "${workspaceFolder}"
+            "cwd": "${workspaceFolder}",
+            "justMyCode": false
         }
     ]
 }

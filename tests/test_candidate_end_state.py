@@ -28,7 +28,7 @@ def test_separator():
     csv_machine = CSVStateMachine(config, output)
     csv_machine.feed(TEST_SEPARATOR)
     csv_machine.feed(FILE_END)
-    assert output.getvalue() == '"Field with , comma",Field without qualifier\n'
+    assert output.getvalue() == '"Field with , comma","Field without qualifier"\n'
 
 
 def test_line_end():
@@ -36,7 +36,7 @@ def test_line_end():
     csv_machine = CSVStateMachine(config, output)
     csv_machine.feed(TEST_LINE_END)
     csv_machine.feed(FILE_END)
-    assert output.getvalue() == '"Field with line\nbreak",Another field\n'
+    assert output.getvalue() == '"Field with line\nbreak","Another field"\n'
 
 
 def test_file_end():

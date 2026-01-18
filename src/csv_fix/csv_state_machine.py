@@ -103,7 +103,7 @@ class CSVStateMachine:
 
     def _flush_fields(self):
         line = self.separator.join(self.fields)
-        if line != "":
+        if line != '""':
             # Empty lines are usually unexpected, skip them
             self.output.write(line + "\n")
         self.fields = []
