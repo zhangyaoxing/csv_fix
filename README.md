@@ -22,49 +22,41 @@ Options and arguments:
 
 ## Examples
 ```bash
-cat testcase/test_case_1.csv | csv_fix
-csv_fix -t testcase/test_case_1.csv
+# Input from stdin
+cat test_case.csv | csv_fix
+# Input from file
+csv_fix -t test_case.csv
 ```
+The processed output will be written to stdout.
 
 ## Features
+### Fix Malformed CSV
+Try to fix the format whenever possible. You can find test cases in `./tests/`.
 
-### Quote within Quote
+The script follow this state machine to fix possible errors:
 
-Quotes should be immediated followed by seperator or line end or EOF, otherwise it's not a valid qualifier, and should be escaped. The following format should be fixed (_See `../testcase/test_case_1.csv`_):
+![CSV State Machine](misc/csv-states.png)
 
-```csv
-"What""s up!","I"m good",I"m also good,"I'm still good"","two quotes" shouldn't make any difference""
-```
+### Trim White Space
 
-```bash
-./csv_fix.py ../testcase/test_case_1.csv
-"What""s up!","I""m good","I""m also good","""I'm still good""","two quotes"" shouldn't make any difference"""
-```
-
-### Begin/End with White Space
-
-For fields that begin/end with white space are stripped by default. Otherwise `mongoimport` type conversion wouldn't work properly (_See `../testcase/test_case_2.csv`_):
-
-```csv
- red,	yellow,green ,"red	"
- ```
+For fields that begin/end with white space can be stripped by specifying `-t`.
 
 ```bash
-./csv_fix.py ../testcase/test_case_2.csv
-"red","yellow","green","red"
+echo -n ' red,	yellow,green ,"red	"' | csv_fix -t
+# Output: "red","yellow","green","red"
 ```
-
-If it's not expected behavior, use `-t false` to cancel it.
 
 ### Customize Seperator
 
-Seperator can be customized, not necessarily to be ",". Specify seperator by `-s`. Note that seperators like `|` needs to be escaped in bash. E.g. (_See `../testcase/test_case_3.csv`_):
-
-```csv
-"hello"||"This is a test"||"This should be good.||"||""
+Seperator can be customized. Specify seperator by `-s`.
+```bash
+echo -n 'A 27" monitor|"This should be good.|"|"' | csv_fix -s '|'
+# Output: "A 27"" monitor"|"This should be good.|"|""
 ```
 
+### Customize Qualifier
+Qualifier can be customized. Specify qualifier by `-q`.
 ```bash
-./csv_fix.py -s '||' ../testcase/test_case_3.csv
-"hello","This is a test","This should be good.||""",
+echo -n "'hello, what's up!','Not bad!'" | csv_fix -q "'"
+# Output 'hello, what''s up!','Not bad!'
 ```
