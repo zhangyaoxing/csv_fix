@@ -1,0 +1,5 @@
+"Field with ""quotes""","Field with , comma",Field without qualifier,"Wrong field with "quote" inside"
+"Field with ""quotes""","Field with ""quotes""!","Field with ""quotes""
+"Field with ""quotes""","FIELD with multi-lines
+line 2
+line 3","Field unexpected end

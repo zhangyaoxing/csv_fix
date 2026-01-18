@@ -95,14 +95,17 @@ class CSVStateMachine:
         if self.trim:
             field = field.strip()
         if self.state in [States.NEW_FIELD, States.FIELD]:
-            self.fields.append(field)
-        else:
-            self.fields.append(f"{self.qualifier}{field}{self.qualifier}")
+            # Escape qualifiers in unqualified fields
+            field = field.replace(self.qualifier, f"{self.qualifier}{self.qualifier}")
+        # Always quote unqualified fields because some systems in certain situations may misinterpret them.
+        self.fields.append(f"{self.qualifier}{field}{self.qualifier}")
         self.field = []
 
     def _flush_fields(self):
         line = self.separator.join(self.fields)
-        self.output.write(line + "\n")
+        if line != "":
+            # Empty lines are usually unexpected, skip them
+            self.output.write(line + "\n")
         self.fields = []
 
     def _detect_time(self):

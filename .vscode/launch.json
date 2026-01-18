@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "csv_fix",
             "args": [
-                "testcase/test_case_1.csv"
+                "misc/test_case.csv"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}"
@@ -24,7 +24,7 @@
                 "-t",
                 "-s",
                 "|",
-                "testcase/test_case_3.csv"
+                "misc/test_case.csv"
             ],
             "console": "integratedTerminal",
             "cwd": "${workspaceFolder}",
